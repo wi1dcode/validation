@@ -13,7 +13,11 @@ const UserCard = ({ picture, name, email, slug }) => {
       <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
         <img
           className="object-cover object-center h-32"
-          src={picture}
+          src={
+            !picture
+              ? "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
+              : picture
+          }
           alt={name}
         />
       </div>
@@ -22,11 +26,11 @@ const UserCard = ({ picture, name, email, slug }) => {
         <p className="text-gray-500">{email}</p>
       </div>
       <div className="p-4 border-t mx-8 mt-2">
-        {/* <Link to={`/${slug}`}> */}
-        <button className="w-1/2 block mx-auto rounded-full bg-stone-800 hover:shadow-lg font-semibold text-white px-6 py-2">
-          More
-        </button>
-        {/* </Link> */}
+        <Link to={`/${slug}`}>
+          <button className="w-1/2 block mx-auto rounded-full bg-stone-800 hover:shadow-lg font-semibold text-white px-6 py-2">
+            More
+          </button>
+        </Link>
       </div>
     </div>
   )

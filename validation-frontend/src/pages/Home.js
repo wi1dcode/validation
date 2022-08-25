@@ -15,22 +15,19 @@ const Home = () => {
   }
 
   return (
-    <>
+    <main className=" flex flex-wrap">
       {users.map((users) => {
         return (
           <UserCard
             key={users.slug}
             name={users.name}
             email={users.email}
-            picture={
-              !users.profile_picture
-                ? "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
-                : users.profile_picture
-            }
+            picture={users.profile_picture}
+            slug={users.slug}
           />
         )
       })}
-    </>
+    </main>
   )
 }
 
