@@ -15,10 +15,18 @@ app.get("/:slug", verify, (req, res) => {
 
 app.post(
   "/",
-  body("name").exists().isLength({ min: 4 }),
-  body("password").exists().isLength({ min: 8 }).isLength({ max: 20 }),
-  body("email").exists().isEmail(),
-  body("city").exists().isIn(["Paris", "Tokyo", "Los Angeles"]),
+  body("name").isLength({ min: 4 }).withMessage("Name is too short"),
+  body("password")
+    .exists()
+    .isLength({ min: 8 })
+    .withMessage("Password must contain minimum 8 characters"),
+  body("email").exists().isEmail().withMessage("Email is invalid"),
+  body("city")
+    .exists()
+    .isIn(["Paris", "Tokyo", "Los Angeles"])
+    .withMessage(
+      "Request denien: allowed cities - Paris, Tokyo and Los Angeles"
+    ),
   body("profile_picture").optional(),
   (req, res) => {
     const { errors } = validationResult(req)
@@ -28,7 +36,7 @@ app.post(
     } else {
       const newUser = {
         ...req.body,
-        slug: slugify(req.body.name),
+        slug: slugify(req.body.name, { lower: true }),
       }
       users.push(newUser)
       res.status(201).json(newUser)
