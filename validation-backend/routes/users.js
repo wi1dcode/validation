@@ -24,10 +24,10 @@ app.post(
   body("city")
     .exists()
     .isIn(["Paris", "Tokyo", "Los Angeles"])
-    .withMessage(
-      "Request denien: allowed cities - Paris, Tokyo and Los Angeles"
-    ),
-  body("profile_picture").optional(),
+    .withMessage("Request denien. Allowed cities: Paris, Tokyo, Los Angeles"),
+  body("profile_picture").if(
+    (profile_picture, { req }) => req.body.profile_picture
+  ),
   (req, res) => {
     const { errors } = validationResult(req)
 
